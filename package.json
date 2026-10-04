@@ -1,8 +1,8 @@
 {
-  "name": "edwardmoll526",
-  "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "name": "edwardmoll-backend",
+  "version": "1.0.0",
+  "description": "Enterprise REST API Engine for Edward Moll Moving & Relocation Services",
+  "author": "Ramjan",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
