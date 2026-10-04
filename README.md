@@ -1,98 +1,239 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 🔧 Edward Moll — Backend API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+> REST API for **Edward Moll Moving & Relocation Services** — built with NestJS, Prisma, and PostgreSQL.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+🌐 **Frontend:** [https://edwardmoll-frontend-nine.vercel.app](https://edwardmoll-frontend-nine.vercel.app)  
+🚀 **Live API:** [https://edwardmoll526.onrender.com](https://edwardmoll526.onrender.com)  
+📖 **Swagger Docs:** [https://edwardmoll526.onrender.com/api](https://edwardmoll526.onrender.com/api)
 
-## Description
+---
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 📸 Tech Stack
 
-## Project setup
+| Technology | Version | Purpose |
+|---|---|---|
+| [NestJS](https://nestjs.com/) | 11 | Backend Framework |
+| [TypeScript](https://www.typescriptlang.org/) | 5 | Type Safety |
+| [Prisma](https://www.prisma.io/) | 7 | ORM & Database Client |
+| [PostgreSQL](https://www.postgresql.org/) | — | Primary Database |
+| [JWT + Passport](https://docs.nestjs.com/security/authentication) | — | Authentication |
+| [Cloudinary](https://cloudinary.com/) | 2 | Image Storage & Upload |
+| [Nodemailer](https://nodemailer.com/) | 9 | Email Notifications |
+| [Swagger](https://swagger.io/) | — | API Documentation |
+| [Bcrypt](https://github.com/kelektiv/node.bcrypt.js) | 6 | Password Hashing |
+| [class-validator](https://github.com/typestack/class-validator) | — | DTO Validation |
 
-```bash
-$ npm install
+---
+
+## 📁 Project Structure
+
+```
+src/
+├── admin/                  # Admin user management
+├── auth/                   # JWT authentication & guards
+│   ├── auth.controller.ts
+│   ├── auth.service.ts
+│   ├── jwt.strategy.ts
+│   ├── jwt-auth.guard.ts
+│   └── roles.guard.ts
+├── contact/                # Contact inquiry module
+├── gallery/                # Gallery image module
+├── posts/                  # Blog posts & comments module
+├── services/               # Moving services module
+├── upload/                 # File upload (Cloudinary)
+├── mailer/                 # Email notification service
+├── prisma/                 # Prisma service & module
+├── common/                 # Shared filters & interceptors
+│   ├── filters/
+│   └── interceptors/
+├── generated/              # Prisma generated client
+├── app.module.ts           # Root module
+└── main.ts                 # Entry point
+prisma/
+└── schema.prisma           # Database schema
 ```
 
-## Compile and run the project
+---
+
+## 🗄️ Database Schema
+
+| Model | Description |
+|---|---|
+| `AdminUser` | Admin accounts with OWNER / ADMIN roles |
+| `Service` | Moving service listings |
+| `GalleryImage` | Gallery photos with categories |
+| `Post` | Blog / update posts with slugs |
+| `Comment` | Nested comments on posts |
+| `ContactInquiry` | Customer contact form submissions |
+
+---
+
+## ✨ API Modules
+
+### 🔐 Auth
+- `POST /auth/login` — Admin login, returns JWT token
+
+### 🛠️ Services
+- `GET /services` — Get all active services
+- `POST /services` — Create service *(Admin)*
+- `PATCH /services/:id` — Update service *(Admin)*
+- `DELETE /services/:id` — Delete service *(Admin)*
+
+### 🖼️ Gallery
+- `GET /gallery` — Get all active gallery images
+- `POST /gallery` — Add gallery image *(Admin)*
+- `PATCH /gallery/:id` — Update gallery image *(Admin)*
+- `DELETE /gallery/:id` — Delete gallery image *(Admin)*
+
+### 📝 Posts
+- `GET /posts` — Get all published posts
+- `GET /posts/:slug` — Get post by slug
+- `POST /posts` — Create post *(Admin)*
+- `PATCH /posts/:id` — Update post *(Admin)*
+- `DELETE /posts/:id` — Delete post *(Admin)*
+- `POST /posts/:id/like` — Like a post
+- `POST /posts/:id/comments` — Add comment
+
+### 📬 Contact
+- `POST /contact` — Submit contact inquiry
+- `GET /contact` — Get all inquiries *(Admin)*
+- `DELETE /contact/:id` — Delete inquiry *(Admin)*
+
+### 📤 Upload
+- `POST /upload` — Upload image to Cloudinary *(Admin)*
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js `>= 18`
+- PostgreSQL database
+- Cloudinary account
+- SMTP email credentials
+
+### Installation
 
 ```bash
-# development
-$ npm run start
+# Clone the repository
+git clone https://github.com/your-username/edwardmoll-backend.git
+cd edwardmoll-backend
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+# Install dependencies
+npm install
 ```
 
-## Run tests
+### Environment Variables
+
+Create a `.env` file in the root directory:
+
+```env
+# Database
+DATABASE_URL=postgresql://USER:PASSWORD@HOST:PORT/DATABASE
+
+# JWT
+JWT_SECRET=your_jwt_secret_key
+JWT_EXPIRES_IN=7d
+
+# Cloudinary
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+
+# Email (SMTP)
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USER=your_email@gmail.com
+MAIL_PASS=your_app_password
+MAIL_FROM=your_email@gmail.com
+
+# App
+PORT=3000
+FRONTEND_URL=https://edwardmoll-frontend-nine.vercel.app
+```
+
+### Database Setup
 
 ```bash
-# unit tests
-$ npm run test
+# Run Prisma migrations
+npx prisma migrate dev
 
-# e2e tests
-$ npm run test:e2e
+# Generate Prisma client
+npx prisma generate
 
-# test coverage
-$ npm run test:cov
+# (Optional) Open Prisma Studio
+npx prisma studio
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### Running the App
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+# Development (watch mode)
+npm run start:dev
+
+# Production build
+npm run build
+npm run start:prod
+
+# Debug mode
+npm run start:debug
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### Running Tests
 
-## Resources
+```bash
+# Unit tests
+npm run test
 
-Check out a few resources that may come in handy when working with NestJS:
+# Test coverage
+npm run test:cov
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+# End-to-end tests
+npm run test:e2e
+```
 
-## Support
+---
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## 📖 API Documentation
 
-## Stay in touch
+Swagger UI is live at:
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```
+https://edwardmoll526.onrender.com/api
+```
 
-## License
+> Auto-generated from NestJS decorators using `@nestjs/swagger`. All endpoints, request/response schemas, and auth flows are documented there.
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+---
+
+## 🌐 Deployment
+
+Recommended platforms for deployment:
+
+| Platform | Type | Notes |
+|---|---|---|
+| [Railway](https://railway.app/) | PaaS | Supports Node.js + PostgreSQL add-on |
+| [Render](https://render.com/) | PaaS | Free tier available |
+| [Fly.io](https://fly.io/) | Container | Good for production |
+
+### General Steps
+
+1. Push the code to GitHub
+2. Create a new project on your chosen platform
+3. Add all environment variables from the `.env` section above
+4. Set the start command: `npm run start:prod`
+5. Provision a **PostgreSQL** database and set `DATABASE_URL`
+6. Run migrations on deploy: `npx prisma migrate deploy`
+
+---
+
+## 🔗 Related
+
+- 🌐 **Frontend:** [edwardmoll-frontend](https://edwardmoll-frontend-nine.vercel.app) — React + TypeScript + Vite (deployed on Vercel)
+- 📖 **Swagger Docs:** [edwardmoll526.onrender.com/api](https://edwardmoll526.onrender.com/api)
+
+---
+
+## 📄 License
+
+This project is private and proprietary. All rights reserved © Edward Moll Moving & Relocation Services.
